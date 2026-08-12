@@ -1,0 +1,151 @@
+---
+---
+
+<section
+  id="contacto"
+  class="bg-cream px-[clamp(24px,7vw,110px)] py-[105px] max-[620px]:px-5 max-[620px]:py-[74px]"
+>
+  <div class="mx-auto grid max-w-[1100px] grid-cols-[0.85fr_1.15fr] overflow-hidden rounded-[28px] bg-paper shadow-[0_30px_80px_rgba(11,38,54,0.14)] max-[820px]:grid-cols-1">
+    <div class="flex flex-col justify-between bg-[#0b2636] p-[clamp(32px,4vw,52px)] text-white">
+      <div class="flex h-20 w-20 items-center justify-center rounded-full border border-gold/40 bg-white/5">
+        <span class="relative inline-block h-9 w-7.5" aria-hidden="true">
+          <i class="absolute left-1/2 top-1/2 h-9 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold not-italic"></i>
+          <b class="absolute left-1/2 top-[36%] h-0.5 w-4.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold font-normal not-italic"></b>
+        </span>
+      </div>
+
+      <div class="mt-10">
+        <h2 class="m-0 font-serif text-[clamp(26px,3vw,32px)] leading-[1.25] font-medium tracking-[-0.02em] text-white">
+          Estamos para caminar contigo.
+        </h2>
+        <p class="mt-4 max-w-[300px] text-sm leading-[1.7] text-white/70">
+          Comparte tu intención, pregunta o mensaje. Te responderemos con
+          atención y cercanía.
+        </p>
+      </div>
+
+      <div class="mt-10 border-t border-gold/30 pt-5">
+        <span class="text-[10px] font-bold uppercase tracking-[0.16em] text-white/50">
+          Tu correo no aparece publicado
+        </span>
+      </div>
+    </div>
+
+    <form
+      data-contact-form
+      class="relative p-[clamp(28px,4vw,52px)]"
+    >
+      <div data-contact-form-fields>
+        <label
+          class="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
+          aria-hidden="true"
+        >
+          Empresa
+          <input name="company" tabindex="-1" autocomplete="off" />
+        </label>
+
+        <h2 class="m-0 font-serif text-[clamp(24px,2.6vw,30px)] font-medium tracking-[-0.02em] text-navy">
+          ¿Quieres escribirnos?
+        </h2>
+        <p class="mt-2 text-sm leading-[1.6] text-muted">
+          Déjanos tu mensaje y nos pondremos en contacto contigo.
+        </p>
+        <p class="mt-1 text-xs text-[#a1a8a9]">Los campos con * son obligatorios.</p>
+
+        <div class="mt-6 flex flex-col gap-4">
+          <input
+            name="name"
+            required
+            maxlength="100"
+            placeholder="Nombre completo *"
+            class="block w-full rounded-[10px] border border-line bg-[#fbf8f2] p-[14px] text-sm text-ink outline-none focus:border-gold"
+          />
+          <input
+            name="email"
+            type="email"
+            required
+            maxlength="254"
+            placeholder="Correo electrónico *"
+            class="block w-full rounded-[10px] border border-line bg-[#fbf8f2] p-[14px] text-sm text-ink outline-none focus:border-gold"
+          />
+          <input
+            name="subject"
+            maxlength="150"
+            placeholder="Asunto"
+            class="block w-full rounded-[10px] border border-line bg-[#fbf8f2] p-[14px] text-sm text-ink outline-none focus:border-gold"
+          />
+          <textarea
+            name="message"
+            required
+            rows="4"
+            maxlength="2000"
+            placeholder="Escribe aquí tu mensaje o intención *"
+            class="block w-full resize-y rounded-[10px] border border-line bg-[#fbf8f2] p-[14px] text-sm text-ink outline-none focus:border-gold"
+          ></textarea>
+        </div>
+
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+          <small class="text-xs text-[#a1a8a9]">Formulario protegido contra mensajes no deseados.</small>
+          <button
+            type="submit"
+            class="inline-flex shrink-0 items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white transition-transform duration-150 hover:-translate-y-0.5"
+          >
+            Enviar mensaje
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <div data-contact-form-success role="status" hidden class="flex min-h-[380px] flex-col items-center justify-center text-center">
+        <span class="relative inline-block h-[38px] w-[30px]" aria-hidden="true">
+          <i class="absolute left-1/2 top-1/2 h-9 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold not-italic"></i>
+          <b class="absolute left-1/2 top-[36%] h-0.5 w-[18px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold font-normal not-italic"></b>
+        </span>
+        <h3 class="mt-[18px] mb-2 font-serif text-[28px] font-medium text-navy">Tu mensaje ha sido recibido.</h3>
+        <p class="max-w-[320px] text-muted">Gracias por escribirnos. Te responderemos pronto.</p>
+        <button
+          type="button"
+          data-contact-reset-form
+          class="mt-5 border-0 border-b border-gold bg-transparent text-blue"
+        >
+          Enviar otro mensaje
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const contactForm = document.querySelector<HTMLFormElement>("[data-contact-form]");
+  const fields = document.querySelector<HTMLElement>("[data-contact-form-fields]");
+  const success = document.querySelector<HTMLElement>("[data-contact-form-success]");
+
+  contactForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!contactForm) return;
+    const response = await fetch("/api/contacto", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.fromEntries(new FormData(contactForm))),
+    });
+    if (!response.ok) {
+      const payload = await response.json().catch(() => null);
+      const message =
+        response.status === 429
+          ? "Demasiados envíos. Intenta de nuevo en unos minutos."
+          : payload?.error || "No fue posible enviar el mensaje. Intenta nuevamente.";
+      window.alert(message);
+      return;
+    }
+    fields?.toggleAttribute("hidden", true);
+    success?.toggleAttribute("hidden", false);
+  });
+
+  document
+    .querySelector<HTMLButtonElement>("[data-contact-reset-form]")
+    ?.addEventListener("click", () => {
+      contactForm?.reset();
+      fields?.toggleAttribute("hidden", false);
+      success?.toggleAttribute("hidden", true);
+    });
+</script>

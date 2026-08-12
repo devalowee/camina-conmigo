@@ -1,0 +1,48 @@
+---
+export const prerender = true;
+
+import Layout from "@/layout/Layout.astro";
+
+const novenas = [
+  {
+    href: "/oraciones/novena-al-espiritu-santo",
+    titulo: "Novena al Espíritu Santo",
+    descripcion: "Nueve días para abrir el corazón a la luz, la fuerza y la presencia del Espíritu Santo.",
+    imagen: "/images/novenas/03-espiritu-santo.webp",
+  },
+];
+---
+
+<Layout title="Novenas">
+  <section class="px-[clamp(24px,7vw,110px)] py-[90px] max-[620px]:px-5 max-[620px]:py-[64px]">
+    <p class="m-0 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-blue">
+      <span class="h-px w-[34px] bg-gold"></span>
+      Un camino de oración
+    </p>
+    <h1 class="m-0 mt-4 font-serif text-[clamp(34px,4.5vw,48px)] leading-[1.1] font-normal tracking-[-0.03em] text-navy">
+      Novenas
+    </h1>
+
+    <div class="mt-12 grid grid-cols-2 gap-8 max-[720px]:grid-cols-1">
+      {
+        novenas.map((novena) => (
+          <a
+            href={novena.href}
+            class="group block overflow-hidden bg-paper shadow-[0_18px_60px_rgba(28,56,67,0.08)] transition-transform duration-150 hover:-translate-y-1"
+          >
+            <div
+              class="h-44 w-full bg-cream bg-contain bg-center bg-no-repeat"
+              style={`background-image: url('${novena.imagen}')`}
+            />
+            <div class="p-7">
+              <h2 class="m-0 font-serif text-xl font-medium tracking-[-0.02em] text-navy group-hover:text-gold">
+                {novena.titulo}
+              </h2>
+              <p class="mt-2 text-sm leading-[1.7] text-muted">{novena.descripcion}</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,126 @@
+---
+export const prerender = false;
+
+import { desc } from "drizzle-orm";
+import DashboardLayout from "@/layout/DashboardLayout.astro";
+import { db } from "@/db/client";
+import { contactMessages } from "@/db/schema";
+
+const messages = await db
+  .select()
+  .from(contactMessages)
+  .orderBy(desc(contactMessages.id));
+
+const dateFormatter = new Intl.DateTimeFormat("es-ES", {
+  dateStyle: "medium",
+  timeStyle: "short",
+});
+
+function formatDate(value: string) {
+  const parsed = new Date(value.includes("T") ? value : `${value.replace(" ", "T")}Z`);
+  return Number.isNaN(parsed.getTime()) ? value : dateFormatter.format(parsed);
+}
+---
+
+<DashboardLayout title="Mensajes de contacto" active="contacto">
+  <p class="m-0 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-blue">
+    <span class="h-px w-[34px] bg-gold"></span>
+    Panel privado
+  </p>
+  <h1 class="m-0 mt-3 font-serif text-3xl font-normal text-navy">Mensajes de contacto</h1>
+
+  <p class="mt-4 text-xs uppercase tracking-[0.14em] text-muted">
+    {messages.length} {messages.length === 1 ? "mensaje recibido" : "mensajes recibidos"}
+  </p>
+
+  <div class="mt-8 border-t border-line">
+    {
+      messages.length === 0 && (
+        <p class="py-16 text-center text-muted">Todavía no han llegado mensajes de contacto.</p>
+      )
+    }
+    {
+      messages.map((item) => (
+        <article class="grid grid-cols-[170px_1fr_120px] gap-6 border-b border-line py-6 max-[620px]:grid-cols-1 max-[620px]:gap-2">
+          <div class="text-xs text-muted">
+            <time>{formatDate(item.createdAt)}</time>
+            <div class="mt-2">
+              <p class="m-0 font-semibold text-navy">{item.name}</p>
+              <p class="m-0 text-[11px]">{item.email}</p>
+            </div>
+          </div>
+          <div>
+            {item.subject && <p class="m-0 mb-1 text-xs font-bold uppercase tracking-[0.08em] text-navy">{item.subject}</p>}
+            <p class="m-0 whitespace-pre-line font-serif text-[15px] leading-[1.7] text-ink">
+              {item.message}
+            </p>
+          </div>
+          <label class="flex h-max items-center gap-2.5">
+            <span
+              data-toggle-track
+              data-state={item.read ? "on" : "off"}
+              class:list={[
+                "relative inline-flex h-5.5 w-10 flex-none items-center rounded-full transition-colors duration-150",
+                item.read ? "bg-gold" : "bg-line",
+              ]}
+            >
+              <input
+                type="checkbox"
+                data-toggle-read
+                data-id={item.id}
+                checked={item.read}
+                class="absolute inset-0 h-full w-full cursor-pointer appearance-none"
+              />
+              <span
+                data-toggle-dot
+                class:list={[
+                  "pointer-events-none inline-block h-4.5 w-4.5 translate-x-0.5 rounded-full bg-white shadow transition-transform duration-150",
+                  item.read && "translate-x-[18px]",
+                ]}
+              />
+            </span>
+            <span data-toggle-label class="text-[10px] font-bold uppercase tracking-[0.1em] text-navy">
+              {item.read ? "Leído" : "No leído"}
+            </span>
+          </label>
+        </article>
+      ))
+    }
+  </div>
+</DashboardLayout>
+
+<script>
+  document.querySelectorAll<HTMLInputElement>("[data-toggle-read]").forEach((checkbox) => {
+    const track = checkbox.closest("[data-toggle-track]");
+    const dot = track?.querySelector<HTMLElement>("[data-toggle-dot]");
+    const label = checkbox.closest("label")?.querySelector<HTMLElement>("[data-toggle-label]");
+
+    const render = (read: boolean) => {
+      track?.setAttribute("data-state", read ? "on" : "off");
+      track?.classList.toggle("bg-gold", read);
+      track?.classList.toggle("bg-line", !read);
+      dot?.classList.toggle("translate-x-[18px]", read);
+      dot?.classList.toggle("translate-x-0.5", !read);
+      if (label) label.textContent = read ? "Leído" : "No leído";
+    };
+
+    checkbox.addEventListener("change", async () => {
+      const id = checkbox.dataset.id ?? "";
+      const previous = !checkbox.checked;
+      checkbox.disabled = true;
+      render(checkbox.checked);
+
+      const body = new FormData();
+      body.set("id", id);
+      body.set("read", String(checkbox.checked));
+
+      const response = await fetch("/api/admin/contacto", { method: "POST", body });
+      if (!response.ok) {
+        checkbox.checked = previous;
+        render(previous);
+      }
+
+      checkbox.disabled = false;
+    });
+  });
+</script>

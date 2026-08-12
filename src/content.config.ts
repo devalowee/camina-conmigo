@@ -13,4 +13,16 @@ const fortaleza = defineCollection({
   }),
 });
 
-export const collections = { fortaleza };
+const novenaEspirituSanto = defineCollection({
+  loader: file("src/content/novenas/espiritu-santo.json"),
+  schema: z.object({
+    day: z.number().int().min(1).max(9),
+    tema: z.string(),
+    citaBiblica: z.string().nullable(),
+    reflexion: z.string().nullable(),
+    intencion: z.string().nullable(),
+    oracion: z.string().nullable(),
+  }),
+});
+
+export const collections = { fortaleza, novenaEspirituSanto };

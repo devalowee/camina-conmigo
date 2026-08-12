@@ -13,6 +13,18 @@ export const prayerIntentions = sqliteTable("prayer_intentions", {
     .default(sql`(current_timestamp)`),
 });
 
+export const contactMessages = sqliteTable("contact_messages", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  subject: text("subject"),
+  message: text("message").notNull(),
+  read: integer("read", { mode: "boolean" }).notNull().default(false),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`(current_timestamp)`),
+});
+
 export const rateLimits = sqliteTable("rate_limits", {
   key: text("key").primaryKey(),
   count: integer("count").notNull().default(0),
