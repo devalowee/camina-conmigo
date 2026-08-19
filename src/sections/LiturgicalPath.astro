@@ -1,16 +1,68 @@
 ---
-const seasons: [string, string, string, string][] = [
-  ["01", "Adviento", "Nos enseña a esperar, como María esperó con confianza la llegada del Salvador.", "/tiempos/adviento"],
-  ["02", "Navidad", "Nos invita a recibir a Jesús, contemplándolo en los brazos de su Madre.", "/tiempos/navidad"],
-  ["03", "Cuaresma", "Nos llama a volver el corazón a Dios y a caminar con fidelidad.", "/tiempos/cuaresma"],
-  ["04", "Pascua", "Nos recuerda que la vida vence a la muerte y que la esperanza nunca queda defraudada.", "/tiempos/pascua"],
-  [
-    "05",
-    "Tiempo Ordinario",
-    "Nos ayuda a reconocer a Jesús caminando en lo cotidiano, en los días sencillos y en los pequeños gestos de amor.",
-    "/tiempos/tiempo-ordinario",
-  ],
+import { Icon } from "astro-icon/components";
+
+interface Season {
+  number: string;
+  title: string;
+  text: string;
+  href: string;
+  color: string;
+}
+
+const seasons: Season[] = [
+  {
+    number: "01",
+    title: "Adviento",
+    text: "Nos enseña a esperar, como María esperó con confianza la llegada del Salvador.",
+    href: "/tiempos/adviento",
+    color: "#6f5a8c",
+  },
+  {
+    number: "02",
+    title: "Navidad",
+    text: "Nos invita a recibir a Jesús, contemplándolo en los brazos de su Madre.",
+    href: "/tiempos/navidad",
+    color: "#c8a36a",
+  },
+  {
+    number: "03",
+    title: "Tiempo Ordinario I",
+    text: "Nos ayuda a reconocer a Jesús caminando en lo cotidiano y en los pequeños gestos de amor.",
+    href: "/tiempos/tiempo-ordinario",
+    color: "#4f7a5c",
+  },
+  {
+    number: "04",
+    title: "Cuaresma",
+    text: "Nos llama a volver el corazón a Dios y a caminar con fidelidad.",
+    href: "/tiempos/cuaresma",
+    color: "#6f5a8c",
+  },
+  {
+    number: "05",
+    title: "Semana Santa",
+    text: "Nos invita a acompañar a Jesús en su Pasión y entrega.",
+    href: "/tiempos/semana-santa",
+    color: "#8c3b42",
+  },
+  {
+    number: "06",
+    title: "Pascua",
+    text: "Nos recuerda que la vida vence a la muerte y que la esperanza nunca queda defraudada.",
+    href: "/tiempos/pascua",
+    color: "#c8a36a",
+  },
+  {
+    number: "07",
+    title: "Tiempo Ordinario II",
+    text: "Nos invita a crecer en la fe y a vivir el Evangelio en las decisiones de cada día.",
+    href: "/tiempos/tiempo-ordinario-2",
+    color: "#4f7a5c",
+  },
 ];
+
+const row1 = seasons.slice(0, 4);
+const row2 = seasons.slice(4);
 ---
 
 <section
@@ -31,29 +83,75 @@ const seasons: [string, string, string, string][] = [
     </p>
   </div>
 
-  <div class="border-t border-line max-[900px]:-mt-5">
-    {
-      seasons.map(([number, title, text, href]) => (
-        <a
-          href={href}
-          class="grid grid-cols-[40px_1fr_20px] items-start gap-[22px] border-b border-line px-[5px] py-6 transition-[padding] duration-150 ease-out hover:pl-3"
-        >
-          <span class="text-[10px] font-bold text-gold">{number}</span>
-          <div>
-            <h3 class="m-0 mb-[5px] font-serif text-[22px] font-medium text-navy">{title}</h3>
-            <p class="m-0 text-sm leading-[1.6] text-muted">{text}</p>
-          </div>
-          <b class="font-normal text-gold">→</b>
-        </a>
-      ))
-    }
-    <p class="mt-7 max-w-[560px] px-[5px] text-sm leading-[1.75] text-muted">
-      A través del Año Litúrgico contemplamos también la presencia fiel de
-      María: desde su sí en Nazaret hasta su permanencia junto a la cruz y su
-      oración con la Iglesia naciente. Por eso, cada episodio de Camina
-      Conmigo es un pequeño paso dentro de un camino más grande: aprender a
-      escuchar a Dios, confiar en su presencia, seguir a Jesús y dejarnos
-      acompañar por María, nuestra Madre.
-    </p>
+  <div>
+    <div class="overflow-x-auto">
+      <div class="min-w-[720px]">
+        <div class="relative">
+          <div class="absolute left-3.5 right-3.5 top-3.5 h-px bg-line" aria-hidden="true"></div>
+          <ol class="relative grid grid-cols-4 gap-6">
+            {
+              row1.map((season) => (
+                <li class="flex flex-col items-start">
+                  <span
+                    class="flex h-7 w-7 items-center justify-center rounded-full border-2 border-paper shadow-[0_0_0_1px_rgba(22,55,74,0.13)]"
+                    style={`background-color:${season.color}`}
+                  />
+                  <span class="mt-4 text-[10px] font-bold uppercase tracking-[0.14em] text-gold">
+                    {season.number}
+                  </span>
+                  <h3 class="m-0 mt-1.5 font-serif text-xl font-medium tracking-[-0.01em] text-navy">
+                    {season.title}
+                  </h3>
+                  <p class="m-0 mt-2 text-sm leading-[1.6] text-muted">{season.text}</p>
+                  <a
+                    href={season.href}
+                    class="mt-4 whitespace-nowrap border-b border-gold/50 text-xs font-semibold uppercase tracking-[0.06em] text-navy transition-colors duration-150 hover:border-gold hover:text-gold"
+                  >
+                    Conocer este tiempo →
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <div class="relative mt-16">
+          <div class="absolute left-3.5 right-3.5 top-3.5 h-px bg-line" aria-hidden="true"></div>
+          <ol class="relative grid grid-cols-3 gap-6">
+            {
+              row2.map((season) => (
+                <li class="flex flex-col items-start">
+                  <span
+                    class="flex h-7 w-7 items-center justify-center rounded-full border-2 border-paper shadow-[0_0_0_1px_rgba(22,55,74,0.13)]"
+                    style={`background-color:${season.color}`}
+                  />
+                  <span class="mt-4 text-[10px] font-bold uppercase tracking-[0.14em] text-gold">
+                    {season.number}
+                  </span>
+                  <h3 class="m-0 mt-1.5 font-serif text-xl font-medium tracking-[-0.01em] text-navy">
+                    {season.title}
+                  </h3>
+                  <p class="m-0 mt-2 text-sm leading-[1.6] text-muted">{season.text}</p>
+                  <a
+                    href={season.href}
+                    class="mt-4 whitespace-nowrap border-b border-gold/50 text-xs font-semibold uppercase tracking-[0.06em] text-navy transition-colors duration-150 hover:border-gold hover:text-gold"
+                  >
+                    Conocer este tiempo →
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 flex items-start gap-4 border-t border-line pt-8">
+      <Icon name="cruz" class="mt-1 h-5 w-5 flex-none text-gold" />
+      <p class="m-0 max-w-[560px] text-sm leading-[1.75] text-muted">
+        María permanece presente a lo largo de todo el Año Litúrgico. Ella nos enseña a escuchar, guardar y vivir la
+        Palabra de Dios.
+      </p>
+    </div>
   </div>
 </section>
