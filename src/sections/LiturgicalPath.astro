@@ -1,10 +1,15 @@
 ---
-const seasons: [string, string, string][] = [
-  ["01", "Adviento", "Nos enseña a esperar, como María esperó con confianza la llegada del Salvador."],
-  ["02", "Navidad", "Nos invita a recibir a Jesús, contemplándolo en los brazos de su Madre."],
-  ["03", "Cuaresma", "Nos llama a volver el corazón a Dios y a caminar con fidelidad."],
-  ["04", "Pascua", "Nos recuerda que la vida vence a la muerte y que la esperanza nunca queda defraudada."],
-  ["05", "Tiempo Ordinario", "Nos ayuda a reconocer a Jesús caminando en lo cotidiano, en los días sencillos y en los pequeños gestos de amor."],
+const seasons: [string, string, string, string][] = [
+  ["01", "Adviento", "Nos enseña a esperar, como María esperó con confianza la llegada del Salvador.", "/tiempos/adviento"],
+  ["02", "Navidad", "Nos invita a recibir a Jesús, contemplándolo en los brazos de su Madre.", "/tiempos/navidad"],
+  ["03", "Cuaresma", "Nos llama a volver el corazón a Dios y a caminar con fidelidad.", "/tiempos/cuaresma"],
+  ["04", "Pascua", "Nos recuerda que la vida vence a la muerte y que la esperanza nunca queda defraudada.", "/tiempos/pascua"],
+  [
+    "05",
+    "Tiempo Ordinario",
+    "Nos ayuda a reconocer a Jesús caminando en lo cotidiano, en los días sencillos y en los pequeños gestos de amor.",
+    "/tiempos/tiempo-ordinario",
+  ],
 ];
 ---
 
@@ -28,14 +33,18 @@ const seasons: [string, string, string][] = [
 
   <div class="border-t border-line max-[900px]:-mt-5">
     {
-      seasons.map(([number, title, text]) => (
-        <div class="grid grid-cols-[40px_1fr] items-start gap-[22px] border-b border-line px-[5px] py-6">
+      seasons.map(([number, title, text, href]) => (
+        <a
+          href={href}
+          class="grid grid-cols-[40px_1fr_20px] items-start gap-[22px] border-b border-line px-[5px] py-6 transition-[padding] duration-150 ease-out hover:pl-3"
+        >
           <span class="text-[10px] font-bold text-gold">{number}</span>
           <div>
             <h3 class="m-0 mb-[5px] font-serif text-[22px] font-medium text-navy">{title}</h3>
             <p class="m-0 text-sm leading-[1.6] text-muted">{text}</p>
           </div>
-        </div>
+          <b class="font-normal text-gold">→</b>
+        </a>
       ))
     }
     <p class="mt-7 max-w-[560px] px-[5px] text-sm leading-[1.75] text-muted">
