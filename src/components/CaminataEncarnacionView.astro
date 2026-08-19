@@ -1,0 +1,200 @@
+---
+import { Icon } from "astro-icon/components";
+import { CAMINATA_ENCARNACION_TOTAL_DIAS, caminataEncarnacionSlug } from "@/lib/dates";
+
+interface Props {
+  day: number;
+  entry: {
+    titulo: string;
+    cita: string;
+    citaRef: string;
+    meditacion: string[];
+    intencion: string;
+  } | null;
+}
+
+const { day, entry } = Astro.props as Props;
+
+const prevDay = day === 1 ? CAMINATA_ENCARNACION_TOTAL_DIAS : day - 1;
+const nextDay = day === CAMINATA_ENCARNACION_TOTAL_DIAS ? 1 : day + 1;
+const prevSlug = caminataEncarnacionSlug(prevDay);
+const nextSlug = caminataEncarnacionSlug(nextDay);
+const isCierre = day === CAMINATA_ENCARNACION_TOTAL_DIAS;
+---
+
+<section id="caminata" class="bg-cream px-[clamp(24px,7vw,110px)] py-[105px] max-[620px]:px-5 max-[620px]:py-[74px]">
+  <div class="mx-auto max-w-[720px]">
+    <p class="m-0 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-blue">
+      <span class="h-px w-[34px] bg-gold"></span>
+      Caminata de la Virgen de la Encarnación
+    </p>
+    <p class="mt-3 text-xs uppercase tracking-[0.14em] text-muted">Día {day} de {CAMINATA_ENCARNACION_TOTAL_DIAS}</p>
+
+    <article class="mt-8 bg-paper p-[clamp(28px,5vw,56px)] shadow-[0_18px_60px_rgba(28,56,67,0.08)]">
+      {
+        entry ? (
+          <>
+            <h1 class="m-0 font-serif text-[clamp(32px,4vw,48px)] leading-[1.1] font-normal tracking-[-0.03em] text-navy">
+              Día {day} — {entry.titulo}
+            </h1>
+
+            <p class="mt-8 text-[11px] font-bold uppercase tracking-[0.14em] text-gold">Palabra para el camino</p>
+            <p class="mt-2 font-serif text-lg italic leading-[1.7] text-blue">{entry.cita}</p>
+            <p class="mt-1 text-[11px] font-bold uppercase tracking-[0.1em] text-muted">{entry.citaRef}</p>
+
+            <p class="mt-8 text-[11px] font-bold uppercase tracking-[0.14em] text-gold">Meditación</p>
+            <div class="mt-2 space-y-3 text-[15px] leading-[1.8] text-ink">
+              {entry.meditacion.map((parrafo) => <p class="m-0">{parrafo}</p>)}
+            </div>
+
+            <p class="mt-8 text-[11px] font-bold uppercase tracking-[0.14em] text-gold">Intención del día</p>
+            <p class="mt-2 font-serif text-[15px] italic leading-[1.8] text-ink">{entry.intencion}</p>
+          </>
+        ) : (
+          <>
+            <h1 class="m-0 font-serif text-[clamp(32px,4vw,48px)] leading-[1.1] font-normal tracking-[-0.03em] text-navy">
+              Día {day} — Preparando esta meditación
+            </h1>
+            <p class="mt-6 text-[15px] leading-[1.8] text-muted">
+              Muy pronto compartiremos la palabra, la meditación y la intención de este día. Mientras tanto, puedes
+              rezar la oración de la devoción y presentar tus intenciones a la Virgen de la Encarnación.
+            </p>
+          </>
+        )
+      }
+
+      <div class="mt-10 border-t border-line pt-8">
+        <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-gold">Oración del día</p>
+
+        <p class="mt-6 text-xs font-bold uppercase tracking-[0.1em] text-navy">Invocación al Espíritu Santo</p>
+        <p class="mt-2 text-[15px] leading-[1.8] text-ink">
+          Ven, Espíritu Santo. Acompáñame en este momento de oración, ilumina mi corazón y ayúdame a caminar con
+          María hacia Jesús.
+        </p>
+
+        {
+          ["Primera", "Segunda", "Tercera"].map((ordinal) => (
+            <div class="mt-8 border-t border-line pt-6">
+              <p class="text-xs font-bold uppercase tracking-[0.1em] text-navy">{ordinal} Salve</p>
+              <p class="mt-2 text-[15px] leading-[1.8] text-ink">
+                Dios te salve, María, llena eres de gracia; el Señor es contigo. Bendita tú eres entre todas las
+                mujeres y bendito es el fruto de tu vientre, Jesús. Santa María, Madre de Dios, ruega por nosotros,
+                pecadores, ahora y en la hora de nuestra muerte. Amén.
+              </p>
+
+              <p class="mt-6 text-xs font-bold uppercase tracking-[0.1em] text-navy">{ordinal} petición</p>
+              <p class="mt-2 text-[15px] leading-[1.8] text-ink">
+                Oh Virgen de la Encarnación, mil veces te saludamos, mil parabienes te damos por el gozo que tuviste
+                cuando Dios en ti encarnó. Concédeme lo que te pido, por amor de Dios, por amor de Dios, por amor de
+                Dios.
+              </p>
+
+              <p class="mt-6 text-xs font-bold uppercase tracking-[0.1em] text-navy">{ordinal} intención y meditación</p>
+              <p class="mt-2 text-[15px] leading-[1.8] text-ink">
+                Virgen de la Encarnación, pongo en tus manos mi {ordinal.toLowerCase()} intención:
+              </p>
+              <p class="mt-2 border border-dashed border-line px-4 py-3 text-sm italic leading-[1.7] text-muted">
+                Espacio para la intención personal
+              </p>
+            </div>
+          ))
+        }
+
+        <div class="mt-8 border-t border-line pt-6">
+          <p class="text-xs font-bold uppercase tracking-[0.1em] text-navy">Oración final</p>
+          <p class="mt-2 text-[15px] leading-[1.8] text-ink">
+            Acordaos, oh piadosísima Virgen María, que jamás se ha oído decir que ninguno de los que han acudido a
+            vuestra protección, implorando vuestro auxilio, haya sido desamparado. Animado por esta confianza, a vos
+            acudo, oh Madre, Virgen de las vírgenes; y gimiendo bajo el peso de mis pecados, me atrevo a comparecer
+            ante vos. Oh Madre de Dios, no desechéis mis súplicas, antes bien escuchadlas y acogedlas benignamente.
+            Amén.
+          </p>
+        </div>
+
+        <div class="mt-8 border-t border-line pt-6">
+          <p class="text-xs font-bold uppercase tracking-[0.1em] text-navy">Bendito y alabado sea</p>
+          <p class="mt-2 text-[15px] leading-[1.8] text-ink">
+            Bendito y alabado sea el Santísimo Sacramento del altar. En el cielo, en la tierra y en todo lugar.
+          </p>
+          <p class="mt-1 text-[11px] font-bold uppercase tracking-[0.1em] text-muted">Se repite tres veces.</p>
+        </div>
+
+        <div class="mt-8 border-t border-line pt-6">
+          <p class="text-xs font-bold uppercase tracking-[0.1em] text-navy">Por quien propaga esta devoción</p>
+          <p class="mt-2 text-[15px] leading-[1.8] text-ink">
+            Rezar un Ave María y un Gloria por la persona que comparte, promueve o transmite esta devoción.
+          </p>
+        </div>
+
+        {
+          isCierre && (
+            <div class="mt-8 border-t border-line pt-6">
+              <p class="text-xs font-bold uppercase tracking-[0.1em] text-navy">Oración final de cierre</p>
+              <p class="mt-2 text-[15px] leading-[1.8] text-ink">
+                Señor Jesús, gracias por haberme acompañado durante este camino. Gracias por cada día de oración, por
+                las palabras que iluminaron mi corazón y por las gracias que recibí, aun aquellas que no supe
+                reconocer.
+              </p>
+              <p class="mt-3 text-[15px] leading-[1.8] text-ink">
+                Virgen de la Encarnación, madre cercana y amorosa, gracias por caminar conmigo y por enseñarme a
+                confiar en Dios.
+              </p>
+              <p class="mt-3 text-[15px] leading-[1.8] text-ink">
+                Ayúdame a conservar esta fe en los días sencillos, en las dificultades y en las decisiones de cada
+                día.
+              </p>
+              <p class="mt-3 text-[15px] leading-[1.8] text-ink">
+                Que pueda seguir caminando contigo, esperando con esperanza, sirviendo con amor y llevando siempre a
+                Jesús en el corazón. Amén.
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </article>
+
+    <div class="mt-10 flex items-center justify-between text-xs font-bold uppercase tracking-[0.1em] text-blue">
+      <a href={`/oraciones/caminata-virgen-encarnacion/${prevSlug}`} class="hover:text-gold">← Oración anterior</a>
+      <a href="/oraciones/caminata-virgen-encarnacion" class="hover:text-gold">Volver al recorrido</a>
+      <a href={`/oraciones/caminata-virgen-encarnacion/${nextSlug}`} class="hover:text-gold">Siguiente oración →</a>
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center justify-between gap-6 border-t border-line bg-paper p-7 shadow-[0_18px_60px_rgba(28,56,67,0.06)]">
+      <div>
+        <p class="m-0 font-serif text-lg font-medium text-navy">Al terminar la oración</p>
+        <p class="m-0 mt-1 text-sm text-muted">
+          Permanece unos instantes en silencio y agradece la presencia de María en este camino. Pon nuevamente tus
+          intenciones en sus manos y continúa caminando con fe hacia Jesús.
+        </p>
+      </div>
+      <button
+        type="button"
+        data-share-caminata
+        class="inline-flex items-center gap-2.5 rounded-[2px] border border-gold px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.1em] text-navy transition-colors duration-150 hover:bg-gold hover:text-white"
+      >
+        <Icon name="compartir-simple" class="h-4 w-4" />
+        Compartir esta caminata
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelector<HTMLButtonElement>("[data-share-caminata]")?.addEventListener("click", async () => {
+    const shareData = {
+      title: "Caminata de la Virgen de la Encarnación",
+      text: "Nueve meses caminando con María hacia el nacimiento de Jesús.",
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      navigator.share(shareData).catch(() => {});
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      window.alert("Enlace copiado. ¡Comparte esta caminata con quien quieras!");
+    } catch {
+      window.alert(window.location.href);
+    }
+  });
+</script>

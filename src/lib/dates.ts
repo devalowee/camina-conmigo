@@ -44,3 +44,29 @@ export function dayOfYear(isoDate: string = todayIso()): number {
   const current = Date.UTC(REFERENCE_YEAR, month - 1, day);
   return Math.floor((current - start) / 86_400_000) + 1;
 }
+
+/** La Caminata de la Virgen de la Encarnación recorre 276 días, del 25 de marzo a Navidad. */
+export const CAMINATA_ENCARNACION_TOTAL_DIAS = 276;
+
+/**
+ * Día del recorrido (1-276) para la fecha dada.
+ * El ciclo arranca cada 25 de marzo; fuera de esa ventana (26 dic - 24 mar) se
+ * sigue contando en bucle desde el 25 de marzo anterior, para que "puedes
+ * incorporarte cualquier día" tenga siempre un día válido que mostrar.
+ */
+export function caminataEncarnacionDay(isoDate: string = todayIso()): number {
+  const [yearStr, monthStr, dayStr] = isoDate.split("-");
+  const year = Number(yearStr);
+  const current = Date.UTC(year, Number(monthStr) - 1, Number(dayStr));
+
+  const startThisYear = Date.UTC(year, 2, 25);
+  const referenceStart = current >= startThisYear ? startThisYear : Date.UTC(year - 1, 2, 25);
+
+  const elapsed = Math.floor((current - referenceStart) / 86_400_000);
+  return (elapsed % CAMINATA_ENCARNACION_TOTAL_DIAS) + 1;
+}
+
+/** N (1-276) -> dia-NNN, mismo formato de slug que usa la colección de fortaleza. */
+export function caminataEncarnacionSlug(day: number): string {
+  return `dia-${String(day).padStart(3, "0")}`;
+}

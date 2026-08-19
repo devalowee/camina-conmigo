@@ -1,0 +1,132 @@
+---
+export const prerender = true;
+
+import Layout from "@/layout/Layout.astro";
+
+const meses = [
+  { mes: "Marzo", tema: "Decir sí con María" },
+  { mes: "Abril", tema: "Acoger la promesa" },
+  { mes: "Mayo", tema: "Confiar en lo que Dios obra" },
+  { mes: "Junio", tema: "Caminar en esperanza" },
+  { mes: "Julio", tema: "Guardar la vida en el corazón" },
+  { mes: "Agosto", tema: "Permanecer en la fe" },
+  { mes: "Septiembre", tema: "Esperar con amor" },
+  { mes: "Octubre", tema: "Preparar el corazón" },
+  { mes: "Noviembre", tema: "Contemplar a Jesús que viene" },
+  { mes: "Diciembre", tema: "Nacimiento de Jesús" },
+];
+---
+
+<Layout title="Caminata de la Virgen de la Encarnación">
+  <section
+    class="bg-[url('/images/hero-caminata.webp')] bg-cover bg-no-repeat bg-right px-[clamp(24px,7vw,110px)] py-[90px] max-[900px]:bg-[position:85%_0] max-[620px]:px-5 max-[620px]:py-[64px]"
+    style="background-color: #f7f3eb;"
+  >
+    <div class="max-w-[560px]">
+      <p class="m-0 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-blue">
+        <span class="h-px w-[34px] bg-gold"></span>
+        Un camino de oración
+      </p>
+      <h1 class="m-0 mt-4 font-serif text-[clamp(38px,5.5vw,58px)] leading-[1.05] font-normal tracking-[-0.04em] text-navy">
+        Caminata de la Virgen de la Encarnación
+      </h1>
+      <p class="mt-5 max-w-[520px] font-serif text-lg leading-[1.75] text-muted">
+        Nueve meses caminando con María hacia el nacimiento de Jesús.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-6">
+        <a
+          href="/oraciones/caminata-virgen-encarnacion/dia-001"
+          data-caminata-hoy
+          class="inline-flex items-center gap-2 rounded-[2px] bg-gold px-7 py-4 text-[11px] font-bold uppercase tracking-[0.1em] text-white transition-transform duration-150 hover:-translate-y-0.5"
+        >
+          Comenzar la caminata de hoy
+        </a>
+        <a
+          href="/oraciones/oracion-para-iniciar-el-dia"
+          class="text-xs font-bold uppercase tracking-[0.1em] text-blue hover:text-gold"
+        >
+          Ver otras oraciones →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-[0.8fr_1.2fr] gap-[clamp(40px,6vw,90px)] border-t border-line px-[clamp(24px,7vw,110px)] py-[76px] max-[900px]:grid-cols-1 max-[620px]:px-5 max-[620px]:py-12">
+    <div>
+      <h2 class="m-0 font-serif text-2xl font-medium tracking-[-0.02em] text-navy">¿Qué es esta caminata?</h2>
+      <p class="mt-4 max-w-[420px] text-[15px] leading-[1.75] text-muted">
+        La Caminata de la Virgen de la Encarnación es una devoción que nos invita a acompañar espiritualmente a María
+        desde la Anunciación hasta el nacimiento de Jesús.
+      </p>
+      <p class="mt-4 max-w-[420px] text-[15px] leading-[1.75] text-muted">
+        Durante este camino ponemos nuestras intenciones en sus manos, contemplamos el misterio de la Encarnación y
+        aprendemos a esperar con fe, esperanza y confianza en Dios.
+      </p>
+      <p class="mt-4 max-w-[420px] text-[15px] leading-[1.75] text-muted">
+        La tradición comienza el 25 de marzo y concluye en Navidad. Cada día nos ofrece un momento para detenernos,
+        orar y caminar junto a María.
+      </p>
+    </div>
+
+    <div class="border-l border-line pl-[clamp(24px,4vw,56px)] max-[900px]:border-l-0 max-[900px]:pl-0 max-[900px]:pt-8 max-[900px]:border-t max-[900px]:border-line">
+      <h2 class="m-0 font-serif text-2xl font-medium tracking-[-0.02em] text-navy">Antes de comenzar</h2>
+      <ul class="mt-4 max-w-[460px] space-y-4 text-[15px] leading-[1.75] text-muted">
+        <li>Para vivir esta caminata puedes buscar un momento tranquilo del día y hacer una pausa consciente.</li>
+        <li>
+          Presenta tres intenciones especiales a la Virgen de la Encarnación. Puedes escribirlas, decirlas en
+          silencio o repetirlas cada día durante la oración.
+        </li>
+        <li>No es necesario comenzar en una fecha específica. Puedes incorporarte cualquier día y continuar el recorrido hasta Navidad.</li>
+        <li>Procura caminar con calma, sin interrupciones y con el corazón abierto a lo que Dios quiera mostrarte.</li>
+      </ul>
+      <p class="mt-6 max-w-[460px] font-serif text-lg italic leading-[1.7] text-blue">
+        Cada día, María nos acompaña un poco más cerca del nacimiento de Jesús.
+      </p>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-cream px-[clamp(24px,7vw,110px)] py-[76px] max-[620px]:px-5 max-[620px]:py-12">
+    <h2 class="m-0 font-serif text-2xl font-medium tracking-[-0.02em] text-navy">Recorrido mensual</h2>
+
+    <div class="mt-9 overflow-x-auto">
+      <div class="relative min-w-[860px]">
+        <div class="absolute left-3.5 right-3.5 top-3.5 h-px bg-line" aria-hidden="true"></div>
+        <ol class="relative flex items-start justify-between">
+          {
+            meses.map(({ mes, tema }, index) => (
+              <li class="flex flex-col items-center px-1">
+                <span
+                  class:list={[
+                    "flex h-7 w-7 items-center justify-center rounded-full border-2 font-serif text-xs font-bold",
+                    index === 0 ? "border-gold bg-gold text-white" : "border-line bg-paper text-muted",
+                  ]}
+                >
+                  {index + 1}
+                </span>
+                <span class="mt-2 max-w-[84px] text-center text-[10px] font-bold uppercase tracking-[0.08em] text-navy">
+                  {mes}
+                </span>
+                <span class="mt-1 max-w-[84px] text-center text-[10px] leading-[1.4] text-muted">{tema}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+
+    <p class="mt-9 text-[13px] leading-[1.7] text-muted">El recorrido permanece fijo. La oración cambia automáticamente según el día.</p>
+    <p class="mt-2 text-[13px] leading-[1.7] text-muted">
+      Diciembre funciona como el cierre del recorrido: la espera culmina en la celebración del nacimiento de Jesús.
+    </p>
+  </section>
+</Layout>
+
+<script>
+  import { caminataEncarnacionDay, caminataEncarnacionSlug } from "@/lib/dates";
+
+  const cta = document.querySelector<HTMLAnchorElement>("[data-caminata-hoy]");
+  if (cta) {
+    const slug = caminataEncarnacionSlug(caminataEncarnacionDay());
+    cta.href = `/oraciones/caminata-virgen-encarnacion/${slug}`;
+  }
+</script>

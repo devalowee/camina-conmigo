@@ -25,4 +25,16 @@ const novenaEspirituSanto = defineCollection({
   }),
 });
 
-export const collections = { fortaleza, novenaEspirituSanto };
+const caminataEncarnacion = defineCollection({
+  loader: file("src/content/caminata-encarnacion/caminata-encarnacion.json"),
+  schema: z.object({
+    day: z.number().int().min(1).max(276),
+    titulo: z.string(),
+    cita: z.string(),
+    citaRef: z.string(),
+    meditacion: z.array(z.string()),
+    intencion: z.string(),
+  }),
+});
+
+export const collections = { fortaleza, novenaEspirituSanto, caminataEncarnacion };

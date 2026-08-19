@@ -1,0 +1,28 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Layout from "@/layout/Layout.astro";
+import CaminataEncarnacionView from "@/components/CaminataEncarnacionView.astro";
+import { CAMINATA_ENCARNACION_TOTAL_DIAS, caminataEncarnacionSlug } from "@/lib/dates";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("caminataEncarnacion");
+  const byDay = new Map(entries.map((entry) => [entry.data.day, entry.data]));
+
+  return Array.from({ length: CAMINATA_ENCARNACION_TOTAL_DIAS }, (_, i) => {
+    const day = i + 1;
+    return {
+      params: { dia: caminataEncarnacionSlug(day) },
+      props: { day, entry: byDay.get(day) ?? null },
+    };
+  });
+}
+
+const { day, entry } = Astro.props;
+const titulo = entry ? `Día ${day} — ${entry.titulo}` : `Día ${day}`;
+---
+
+<Layout title={`${titulo} · Caminata de la Virgen de la Encarnación`}>
+  <CaminataEncarnacionView day={day} entry={entry} />
+</Layout>
