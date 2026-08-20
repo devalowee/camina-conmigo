@@ -25,6 +25,54 @@ const novenaEspirituSanto = defineCollection({
   }),
 });
 
+const novenaGuadalupe = defineCollection({
+  loader: file("src/content/novenas/guadalupe.json"),
+  schema: z.object({
+    day: z.number().int().min(1).max(9),
+    tema: z.string(),
+    titulo: z.string(),
+    citaBiblica: z.string().nullable(),
+    citaRef: z.string().nullable(),
+    reflexion: z.string().nullable(),
+    intencion: z.string().nullable(),
+    oracion: z.string().nullable(),
+    cierreTitulo: z.string().nullable(),
+    cierreTexto: z.string().nullable(),
+  }),
+});
+
+const novenaSanJose = defineCollection({
+  loader: file("src/content/novenas/san-jose.json"),
+  schema: z.object({
+    day: z.number().int().min(1).max(9),
+    tema: z.string(),
+    titulo: z.string(),
+    citaBiblica: z.string().nullable(),
+    citaRef: z.string().nullable(),
+    reflexion: z.string().nullable(),
+    intencion: z.string().nullable(),
+    oracion: z.string().nullable(),
+    cierreTitulo: z.string().nullable(),
+    cierreTexto: z.string().nullable(),
+  }),
+});
+
+const novenaSagradoCorazon = defineCollection({
+  loader: file("src/content/novenas/sagrado-corazon.json"),
+  schema: z.object({
+    day: z.number().int().min(1).max(9),
+    tema: z.string(),
+    titulo: z.string(),
+    citaBiblica: z.string().nullable(),
+    citaRef: z.string().nullable(),
+    reflexion: z.string().nullable(),
+    intencion: z.string().nullable(),
+    oracion: z.string().nullable(),
+    cierreTitulo: z.string().nullable(),
+    cierreTexto: z.string().nullable(),
+  }),
+});
+
 const caminataEncarnacion = defineCollection({
   loader: file("src/content/caminata-encarnacion/caminata-encarnacion.json"),
   schema: z.object({
@@ -37,4 +85,11 @@ const caminataEncarnacion = defineCollection({
   }),
 });
 
-export const collections = { fortaleza, novenaEspirituSanto, caminataEncarnacion };
+export const collections = {
+  fortaleza,
+  novenaEspirituSanto,
+  novenaGuadalupe,
+  novenaSanJose,
+  novenaSagradoCorazon,
+  caminataEncarnacion,
+};

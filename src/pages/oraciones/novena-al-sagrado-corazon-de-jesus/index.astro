@@ -1,0 +1,260 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Layout from "@/layout/Layout.astro";
+import { Icon } from "astro-icon/components";
+
+const entries = await getCollection("novenaSagradoCorazon");
+const days = entries.map((entry) => entry.data).sort((a, b) => a.day - b.day);
+---
+
+<Layout title="Novena al Sagrado Corazón de Jesús">
+  <section
+    class="bg-[url('/images/hero-sagrado-corazon.webp')] bg-cover bg-no-repeat bg-right px-[clamp(24px,7vw,110px)] py-[90px] max-[900px]:bg-[position:85%_0] max-[620px]:px-5 max-[620px]:py-[64px]"
+    style="background-color: #f7f3eb;"
+  >
+    <div class="max-w-[560px]">
+      <p class="m-0 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-blue">
+        <span class="h-px w-[34px] bg-gold"></span>
+        Un camino de oración
+      </p>
+      <h1 class="m-0 mt-4 font-serif text-[clamp(38px,5.5vw,58px)] leading-[1.05] font-normal tracking-[-0.04em] text-navy">
+        Novena al Sagrado Corazón de Jesús
+      </h1>
+      <p class="mt-5 max-w-[520px] font-serif text-lg leading-[1.75] text-muted">
+        Nueve días para descansar en el amor de Jesús, confiarle nuestras heridas y aprender a vivir con un corazón nuevo.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-6">
+        <a
+          href="#dia-actual"
+          data-scroll-day-1
+          class="inline-flex items-center gap-2 rounded-[2px] bg-gold px-7 py-4 text-[11px] font-bold uppercase tracking-[0.1em] text-white transition-transform duration-150 hover:-translate-y-0.5"
+        >
+          Comenzar Día 1
+        </a>
+        <a href="/oraciones/novenas" class="text-xs font-bold uppercase tracking-[0.1em] text-blue hover:text-gold">
+          Ver todas las novenas →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-[0.8fr_1.2fr] gap-[clamp(40px,6vw,90px)] border-t border-line px-[clamp(24px,7vw,110px)] py-[76px] max-[900px]:grid-cols-1 max-[620px]:px-5 max-[620px]:py-12">
+    <div>
+      <h2 class="m-0 font-serif text-2xl font-medium tracking-[-0.02em] text-navy">¿Para qué rezamos esta novena?</h2>
+      <p class="mt-4 max-w-[420px] text-[15px] leading-[1.75] text-muted">
+        Rezamos esta novena para contemplar el Corazón de Jesús, signo de un amor que se entrega sin medida. En él encontramos consuelo cuando estamos cansados, misericordia cuando nos equivocamos y esperanza cuando sentimos que hemos perdido el rumbo.
+      </p>
+      <p class="mt-4 max-w-[420px] text-[15px] leading-[1.75] text-muted">
+        Durante nueve días ponemos en sus manos nuestra vida, nuestras heridas, nuestra familia y nuestras preocupaciones. Le pedimos que transforme nuestro corazón, nos enseñe a perdonar y nos ayude a vivir con más compasión, confianza y paz.
+      </p>
+    </div>
+
+    <div class="border-l border-line pl-[clamp(24px,4vw,56px)] max-[900px]:border-l-0 max-[900px]:pl-0 max-[900px]:pt-8 max-[900px]:border-t max-[900px]:border-line">
+      <h2 class="m-0 font-serif text-2xl font-medium tracking-[-0.02em] text-navy">Camina durante nueve días</h2>
+
+      <div class="mt-9 overflow-x-auto">
+        <div class="relative min-w-[560px]">
+          <div class="absolute left-3.5 right-3.5 top-3.5 h-px bg-line" aria-hidden="true"></div>
+          <ol class="relative flex items-start justify-between">
+            {
+              days.map((day) => (
+                <li class="flex flex-col items-center">
+                  <button
+                    type="button"
+                    data-day-trigger
+                    data-day={day.day}
+                    aria-current={day.day === 1 ? "true" : undefined}
+                    class:list={[
+                      "flex items-center justify-center rounded-full border-2 font-serif text-xs font-bold transition-all duration-150",
+                      day.day === 1
+                        ? "h-7 w-7 border-gold bg-gold text-white"
+                        : "h-7 w-7 border-line bg-paper text-muted hover:border-gold hover:text-gold",
+                    ]}
+                  >
+                    {day.day}
+                  </button>
+                  <span class="mt-2 max-w-[64px] text-center text-[10px] leading-[1.4] text-muted">
+                    Día {day.day} · {day.tema}
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dia-actual" class="relative overflow-hidden border-t border-line px-[clamp(24px,7vw,110px)] py-[70px] max-[620px]:px-5 max-[620px]:py-12">
+    {
+      days.map((day) => (
+        <article data-day-panel data-day={day.day} hidden={day.day !== 1}>
+          <h3 class="m-0 font-serif text-2xl font-medium tracking-[-0.02em] text-navy">
+            Día {day.day} — {day.titulo}
+          </h3>
+
+          {day.citaBiblica ? (
+            <div class="mt-8 grid grid-cols-4 gap-8 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1">
+              <div>
+                <p class="m-0 text-[11px] font-bold uppercase tracking-[0.1em] text-gold">Cita bíblica</p>
+                <p class="mt-2 font-serif text-[15px] italic leading-[1.7] text-ink">{day.citaBiblica}</p>
+                {day.citaRef ? <p class="mt-1 text-xs text-muted">{day.citaRef}</p> : null}
+              </div>
+              <div>
+                <p class="m-0 text-[11px] font-bold uppercase tracking-[0.1em] text-gold">Reflexión</p>
+                <p class="mt-2 text-sm leading-[1.7] text-ink">{day.reflexion}</p>
+              </div>
+              <div>
+                <p class="m-0 text-[11px] font-bold uppercase tracking-[0.1em] text-gold">Intención del día</p>
+                <p class="mt-2 font-serif text-sm italic leading-[1.7] text-ink">{day.intencion}</p>
+              </div>
+              <div>
+                <p class="m-0 text-[11px] font-bold uppercase tracking-[0.1em] text-gold">Oración del día</p>
+                <p class="mt-2 font-serif text-sm italic leading-[1.7] text-ink">{day.oracion}</p>
+              </div>
+            </div>
+          ) : (
+            <p class="mt-8 text-sm leading-[1.7] text-muted">
+              Muy pronto compartiremos la reflexión, intención y oración de este día.
+            </p>
+          )}
+
+          {day.cierreTitulo ? (
+            <div class="mt-10 border-t border-line pt-8">
+              <p class="m-0 font-serif text-xl font-medium tracking-[-0.02em] text-navy">{day.cierreTitulo}</p>
+              <p class="mt-3 max-w-[640px] font-serif text-[15px] italic leading-[1.8] text-ink">{day.cierreTexto}</p>
+            </div>
+          ) : null}
+
+          <div class="mt-10 flex items-center justify-between border-t border-line pt-6 text-xs font-bold uppercase tracking-[0.1em] text-blue">
+            <button
+              type="button"
+              data-prev-day
+              class="inline-flex items-center gap-1.5 disabled:cursor-not-allowed disabled:text-[#c3cacb] hover:not-disabled:text-gold"
+            >
+              ← Día anterior
+            </button>
+            <button type="button" data-back-to-novena class="hover:text-gold">
+              Volver a la novena
+            </button>
+            {day.day === 9 ? (
+              <button type="button" data-share-inline class="hover:text-gold">
+                Compartir esta novena
+              </button>
+            ) : (
+              <button
+                type="button"
+                data-next-day
+                class="inline-flex items-center gap-1.5 disabled:cursor-not-allowed disabled:text-[#c3cacb] hover:not-disabled:text-gold"
+              >
+                Siguiente día →
+              </button>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="border-t border-line bg-cream px-[clamp(24px,7vw,110px)] py-10 max-[620px]:px-5">
+    <div class="flex flex-wrap items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <img src="/images/novenas/01-biblia.webp" alt="" aria-hidden="true" class="h-14 w-14 flex-none object-contain" />
+        <div>
+          <p class="m-0 font-serif text-lg font-medium text-navy">Al terminar los nueve días</p>
+          <p class="m-0 mt-1 text-sm text-muted">Permanece unos instantes en silencio y agradece el amor del Corazón de Jesús.</p>
+        </div>
+      </div>
+      <button
+        type="button"
+        data-share-novena
+        class="inline-flex items-center gap-2.5 rounded-[2px] border border-gold px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.1em] text-navy transition-colors duration-150 hover:bg-gold hover:text-white"
+      >
+        <Icon name="compartir-simple" class="h-4 w-4" />
+        Compartir esta novena
+      </button>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const triggers = document.querySelectorAll<HTMLButtonElement>("[data-day-trigger]");
+  const panels = document.querySelectorAll<HTMLElement>("[data-day-panel]");
+  const prevButtons = document.querySelectorAll<HTMLButtonElement>("[data-prev-day]");
+  const nextButtons = document.querySelectorAll<HTMLButtonElement>("[data-next-day]");
+  const backButtons = document.querySelectorAll<HTMLButtonElement>("[data-back-to-novena]");
+  const shareInlineButtons = document.querySelectorAll<HTMLButtonElement>("[data-share-inline]");
+  const daySection = document.getElementById("dia-actual");
+  const totalDays = panels.length;
+
+  function setDay(day: number) {
+    triggers.forEach((trigger) => {
+      const isActive = Number(trigger.dataset.day) === day;
+      trigger.classList.toggle("bg-gold", isActive);
+      trigger.classList.toggle("border-gold", isActive);
+      trigger.classList.toggle("text-white", isActive);
+      trigger.classList.toggle("bg-paper", !isActive);
+      trigger.classList.toggle("border-line", !isActive);
+      trigger.classList.toggle("text-muted", !isActive);
+      if (isActive) trigger.setAttribute("aria-current", "true");
+      else trigger.removeAttribute("aria-current");
+    });
+
+    panels.forEach((panel) => {
+      panel.hidden = Number(panel.dataset.day) !== day;
+    });
+
+    prevButtons.forEach((button) => (button.disabled = day <= 1));
+    nextButtons.forEach((button) => (button.disabled = day >= totalDays));
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const day = Number(trigger.dataset.day);
+      setDay(day);
+    });
+  });
+
+  function currentDay() {
+    const visible = Array.from(panels).find((panel) => !panel.hidden);
+    return Number(visible?.dataset.day ?? 1);
+  }
+
+  prevButtons.forEach((button) =>
+    button.addEventListener("click", () => setDay(Math.max(1, currentDay() - 1))),
+  );
+  nextButtons.forEach((button) =>
+    button.addEventListener("click", () => setDay(Math.min(totalDays, currentDay() + 1))),
+  );
+  backButtons.forEach((button) =>
+    button.addEventListener("click", () => {
+      setDay(1);
+      daySection?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }),
+  );
+
+  async function shareNovena() {
+    const shareData = {
+      title: "Novena al Sagrado Corazón de Jesús",
+      text: "Nueve días para descansar en el amor de Jesús, confiarle nuestras heridas y aprender a vivir con un corazón nuevo.",
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      navigator.share(shareData).catch(() => {});
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      window.alert("Enlace copiado. ¡Comparte esta novena con quien quieras!");
+    } catch {
+      window.alert(window.location.href);
+    }
+  }
+
+  document.querySelector<HTMLButtonElement>("[data-share-novena]")?.addEventListener("click", shareNovena);
+  shareInlineButtons.forEach((button) => button.addEventListener("click", shareNovena));
+
+  setDay(1);
+</script>
